@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resposive bank UI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Resposive bank UI</h1>
+        <div class="details">
+            <h2 class="bal">Balance : $ <span id="balance"></span></h2>
+            <label for="amount" class="amo">Amount:</label>
+            <input type="number" placeholder="Enter amount (USD)" id="amount">
+            <div class="but">
+                <button id="b1" class="buttons" onclick="deposit()">Deposit</button>
+                <button id="b2" class="buttons" onclick="withdraw()">Withdraw</button>
+            </div>
+            <p id="message"></p>
+        </div>
+    </div>
+</body>
+<script>
+  let balance = 0;
+  const msg = document.getElementById("message");
+
+  function showMessage(text, type) {
+    msg.innerText = text;
+    msg.className = type;   // success or error
+    msg.style.display = "inline-block";
+  }
+
+  function deposit() {
+    let paisa = document.getElementById('amount').value;
+
+    if (paisa > 0) {
+      balance += parseFloat(paisa);
+      document.getElementById('balance').innerText = balance;
+      showMessage("Deposit successful", "success");
+    } else {
+      showMessage("Please enter a valid amount to deposit.", "error");
+    }
+
+    document.getElementById('amount').value = '';
+  }
+
+  function withdraw() {
+    let paisa = document.getElementById('amount').value;
+
+    if (paisa > 0) {
+      if (paisa <= balance) {
+        balance -= parseFloat(paisa);
+        document.getElementById('balance').innerText = balance;
+        showMessage("Withdrawal successful", "success");
+      } else {
+        showMessage("Insufficient balance for this withdrawal.", "error");
+      }
+    } else {
+      showMessage("Please enter a valid amount to withdraw.", "error");
+    }
+
+    document.getElementById('amount').value = '';
+  }
+</script>
+
+</html>
